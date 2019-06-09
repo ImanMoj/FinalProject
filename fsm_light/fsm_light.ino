@@ -1,6 +1,6 @@
 #define FIVE_SEC_FAULT 4 
-#define T_DRIBBLE 1000
-#define T_t 1000
+#define T_DRIBBLE 5000
+#define T_t 5000
 #define FAULT_PIN 5
 int state_d;
 int l;

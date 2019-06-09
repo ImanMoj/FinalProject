@@ -1,11 +1,11 @@
 #define RUNNING_FAULT 17
-#define T1 2000
-#define T2 2000
-#define HR_PIN 3
-#define TR_PIN 4
-#define HL_PIN 6
-#define TL_PIN 7
-#define FAULT_PIN 5
+#define T1 5000
+#define T2 5000
+#define HR_PIN 2
+#define TR_PIN 3
+#define HL_PIN 4
+#define TL_PIN 5
+#define FAULT_PIN 7
 
 bool flag = false;
 int state_g;
@@ -27,10 +27,10 @@ void setup() {
   TIMSK2 = (TIMSK2 & B11111110) | 0x01;
   TCCR2B = (TCCR2B & B11111000) | 0x07;
   pinMode(interruptPin, INPUT_PULLUP);
-  pinMode(HR_PIN , INPUT_PULLUP);
-  pinMode(TR_PIN , INPUT_PULLUP);
-  pinMode(HL_PIN , INPUT_PULLUP);
-  pinMode(TL_PIN , INPUT_PULLUP);
+  pinMode(HR_PIN , INPUT);
+  pinMode(TR_PIN , INPUT);
+  pinMode(HL_PIN , INPUT);
+  pinMode(TL_PIN , INPUT);
   pinMode(FAULT_PIN , OUTPUT);
   digitalWrite(FAULT_PIN , 0);
  // attachInterrupt(0, isr_g, CHANGE);
@@ -60,6 +60,15 @@ ISR(TIMER2_OVF_vect){
 }
 void fsm_g()
 {
+//   Serial.print("hl is ");
+//  Serial.println(hl);
+//    Serial.print("hr is ");
+//  Serial.println(hr);
+//    Serial.print("tl is ");
+//  Serial.println(tl);
+//    Serial.print("tr is ");
+//  Serial.println(tr);
+
   switch (state_g)
   {
     case 0 :
@@ -167,12 +176,20 @@ void s0_g()
   } 
   else
   {
-    //fsm_g();
+    state_g = 0 ;
   }
 }
 
 void s1_g()
 {
+//  Serial.print("hl is ");
+//  Serial.println(hl);
+//    Serial.print("hr is ");
+//  Serial.println(hr);
+//    Serial.print("tl is ");
+//  Serial.println(tl);
+//    Serial.print("tr is ");
+//  Serial.println(tr);
    if( (( hl == 0)&&(tl == 0)) && (( hr == 1)||(tr == 1)) )
    {
       state_g =  2 ;
@@ -338,7 +355,7 @@ void s10_g()
     duration1_g = finish1_g - start1_g ;
     //delay(3);
     Serial.println("duration");
-    //Serial.println(duration1_g);
+    Serial.println(duration1_g);
     if( duration1_g > T1)
     {
       state_g = RUNNING_FAULT ;
@@ -497,6 +514,7 @@ void loop() { // run over and over
  if(state_g != RUNNING_FAULT)
  {
   fsm_g();
+  delay(2000);
  }
  else if (flag == false)
  {
@@ -508,3 +526,4 @@ void loop() { // run over and over
  }
 }
  
+

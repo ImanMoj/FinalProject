@@ -1,10 +1,10 @@
 // Time and state definitions
 #define FIVE_SEC_FAULT 4 
-#define T_DRIBBLE 1000
-#define T_t 1000
+#define T_DRIBBLE 10000
+#define T_t 10000
 #define RUNNING_FAULT 17
-#define T1 2000
-#define T2 2000
+#define T1 10000
+#define T2 10000
 
 // pin definitions 
 
@@ -68,7 +68,7 @@ void leg_fsm_runner()
      {
        finish1_d = millis();
        duration1_d = finish1_d - start1_d ;
-       if (duration1_d >= 5000)
+       if (duration1_d >= 10000)
        {
          state_d = FIVE_SEC_FAULT ; 
          return ; 

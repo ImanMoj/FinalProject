@@ -38,8 +38,8 @@ long baud = 9600;
 char cmd[100];
 int cmdIndex;
 
-bool als_on = true;
-bool ps_on = false  ;
+bool als_on = false;
+bool ps_on = true ;
 
 
 
